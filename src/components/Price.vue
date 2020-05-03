@@ -1,19 +1,39 @@
 <template>
-  <div id="singlePrice">
-    <h1>{{ name }}</h1>
-    <p>
-      GHs
-      <br />
-      <span>{{ price }}</span>
-    </p>
-    <ul v-for="(singlePackage, index) in packages" :key="index">
-      <li>{{ singlePackage }}</li>
-    </ul>
-    <button @click="doSubscribe(id)">Subscribe Now</button>
-    <modal :name="chosenPrice">
-      <p>Successfull Subscription</p>
-      <p>You have subscribed to the {{ chosenPrice }} Package</p>
-    </modal>
+  <div>
+    <div id="singlePrice">
+      <h1>{{ name }}</h1>
+      <p>
+        GHs
+        <br />
+        <span>{{ price }}</span>
+      </p>
+      <ul v-for="(singlePackage, index) in packages" :key="index">
+        <li>{{ singlePackage }}</li>
+      </ul>
+      <button @click="doSubscribe(id)">Subscribe Now</button>
+      <modal :name="chosenPackage">
+        <section id="form">
+          <form @submit.prevent="confirmSubscription">
+            <label>
+              Your Name:
+              <input type="text" v-model="yourName" />
+            </label>
+            <br />
+            <label>
+              Your Email:
+              <input type="email" v-model="yourEmail" />
+            </label>
+            <br />
+            <label>
+              Chosen Package:
+              <input type="text" disabled v-model="chosenPackage" />
+            </label>
+            <br />
+            <button type="submit">Confirm</button>
+          </form>
+        </section>
+      </modal>
+    </div>
   </div>
 </template>
 
@@ -24,18 +44,18 @@ export default {
   props: ["id", "banner", "name", "price", "packages"],
   data() {
     return {
-      chosenPrice: ""
+      chosenPackage: "",
+      yourName: "",
+      yourEmail: ""
     };
   },
   methods: {
     doSubscribe(id) {
-      this.chosenPrice = this.priceName(id);
-      // this.$modal.show(this.chosenPrice);
-      this.showAlert();
-      addSubscriber("name");
+      this.chosenPackage = this.getPackageName(id);
+      this.$modal.show(this.chosenPackage);
     },
 
-    priceName(id) {
+    getPackageName(id) {
       if (id == 1) {
         return "Bronze";
       }
@@ -49,6 +69,9 @@ export default {
     showAlert() {
       // Use sweetalert2
       this.$swal("Hello Vue world!!!");
+    },
+    confirmSubscription() {
+      addSubscriber(this.yourName, this.yourEmail, this.chosenPackage);
     }
   }
 };
@@ -77,5 +100,11 @@ button {
 }
 button:hover {
   cursor: pointer;
+}
+
+#form {
+  padding-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

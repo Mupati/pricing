@@ -19,12 +19,7 @@
         />
       </div>
       <div id="gold" class="price">
-        <Price
-          :id="gold.id"
-          :name="gold.name"
-          :price="gold.price"
-          :packages="gold.packages"
-        />
+        <Price :id="gold.id" :name="gold.name" :price="gold.price" :packages="gold.packages" />
       </div>
     </section>
   </div>
@@ -53,13 +48,13 @@ export default {
 
 <style>
 #app {
-  margin-top: 10%;
+  padding-top: 10%;
 }
 #pricing {
   display: flex;
   justify-content: center;
   justify-content: space-evenly;
-  border: 1px solid green;
+  border: 1px solid #eee;
   border-radius: 10px;
   padding: 5rem 1rem;
   margin: 0 auto;
@@ -71,8 +66,52 @@ export default {
 
 .price {
   text-align: center;
-  border: 1px solid #eee;
   border-radius: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
   padding-bottom: 50px;
+}
+#bronze {
+  border: 2px solid brown;
+}
+#bronze h1,
+#bronze button {
+  background: brown;
+  color: #fff;
+}
+#silver {
+  border: 2px solid silver;
+}
+#silver h1,
+#silver button {
+  background: silver;
+  color: #fff;
+}
+
+#gold {
+  border: 2px solid #eaa844;
+}
+#gold h1,
+#gold button {
+  background: #eaa844;
+  color: #fff;
+}
+
+/* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {
+  #pricing {
+    flex-direction: column;
+  }
+} */
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 768px) {
+  #pricing {
+    flex-direction: column;
+    border: none;
+  }
+  .price {
+    margin: 20px auto;
+  }
 }
 </style>

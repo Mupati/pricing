@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { addSubscriber } from "../api/index";
 export default {
   name: "price",
   props: ["id", "banner", "name", "price", "packages"],
@@ -29,7 +30,9 @@ export default {
   methods: {
     doSubscribe(id) {
       this.chosenPrice = this.priceName(id);
-      this.$modal.show(this.chosenPrice);
+      // this.$modal.show(this.chosenPrice);
+      this.showAlert();
+      addSubscriber("name");
     },
 
     priceName(id) {
@@ -42,6 +45,10 @@ export default {
       if (id == 3) {
         return "Gold";
       }
+    },
+    showAlert() {
+      // Use sweetalert2
+      this.$swal("Hello Vue world!!!");
     }
   }
 };

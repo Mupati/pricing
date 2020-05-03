@@ -19,13 +19,17 @@
         />
       </div>
       <div id="gold" class="price">
-        <Price
-          :id="gold.id"
-          :name="gold.name"
-          :price="gold.price"
-          :packages="gold.packages"
-        />
+        <Price :id="gold.id" :name="gold.name" :price="gold.price" :packages="gold.packages" />
       </div>
+    </section>
+    <section id="form">
+      <form @submit.prevent="confirmSubscription">
+        <input type="text" placeholder="Your Name" v-model="name" />
+        <br />
+        <input type="email" />
+        <br />
+        <button type="submit">Subscribe</button>
+      </form>
     </section>
   </div>
 </template>
@@ -34,7 +38,7 @@
 import Hero from "./components/Hero";
 import Price from "./components/Price.vue";
 import { bronze, silver, gold } from "./api/data";
-
+import { addSubscriber } from "./api/index";
 export default {
   name: "App",
   components: {
@@ -45,8 +49,16 @@ export default {
     return {
       bronze,
       silver,
-      gold
+      gold,
+      name: "",
+      email: "",
+      package: ""
     };
+  },
+  methods: {
+    confirmSubscription() {
+      addSubscriber(this.name, this.email, this.package);
+    }
   }
 };
 </script>
@@ -101,13 +113,6 @@ export default {
   background: #eaa844;
   color: #fff;
 }
-
-/* Extra small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {
-  #pricing {
-    flex-direction: column;
-  }
-} */
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {

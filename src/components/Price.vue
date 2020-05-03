@@ -10,6 +10,10 @@
       <li>{{ singlePackage }}</li>
     </ul>
     <button @click="doSubscribe(id)">Subscribe Now</button>
+    <modal :name="chosenPrice">
+      <p>Successfull Subscription</p>
+      <p>You have subscribed to the {{ chosenPrice }} Package</p>
+    </modal>
   </div>
 </template>
 
@@ -18,12 +22,26 @@ export default {
   name: "price",
   props: ["id", "banner", "name", "price", "packages"],
   data() {
-    return {};
+    return {
+      chosenPrice: ""
+    };
   },
-
   methods: {
     doSubscribe(id) {
-      alert("Subscribed to " + id);
+      this.chosenPrice = this.priceName(id);
+      this.$modal.show(this.chosenPrice);
+    },
+
+    priceName(id) {
+      if (id == 1) {
+        return "Bronze";
+      }
+      if (id == 2) {
+        return "Silver";
+      }
+      if (id == 3) {
+        return "Gold";
+      }
     }
   }
 };

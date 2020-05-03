@@ -11,7 +11,7 @@
         <li>{{ singlePackage }}</li>
       </ul>
       <button @click="doSubscribe(id)">Subscribe Now</button>
-      <modal :name="chosenPackage">
+      <modal :name="chosenPackage" width="50%" height="50%">
         <section id="form">
           <form @submit.prevent="confirmSubscription">
             <label>
@@ -31,6 +31,9 @@
             <br />
             <p>{{ feedback }}</p>
             <button type="submit">Confirm</button>
+            <br />
+            <br />
+            <button @click="$modal.hide(chosenPackage)" id="cancel">Cancel</button>
           </form>
         </section>
       </modal>
@@ -69,17 +72,14 @@ export default {
       }
     },
     async confirmSubscription() {
-      var that = this;
-      this.feedback = "Loading....";
+      // var that = this;
+      this.feedback = "Processing....";
       const res = await addSubscriber(
         this.yourName,
         this.yourEmail,
         this.chosenPackage
       );
       this.feedback = res.message;
-      setTimeout(function() {
-        that.$modal.hide(this.chosenPackage);
-      }, 3000);
     }
   }
 };
@@ -100,7 +100,7 @@ ul {
   padding: 0;
   list-style: none;
 }
-button {
+button:not(#cancel) {
   margin-top: 30px;
   padding: 10px 30px;
   border-radius: 5px;
@@ -114,5 +114,14 @@ button:hover {
   padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+.vm--modal {
+  width: 100% !important;
+  height: auto !important;
+}
+#cancel {
+  background: red;
+  opacity: 0.5;
+  padding: 5px 10px;
 }
 </style>

@@ -19,7 +19,12 @@
         />
       </div>
       <div id="gold" class="price">
-        <Price :id="gold.id" :name="gold.name" :price="gold.price" :packages="gold.packages" />
+        <Price
+          :id="gold.id"
+          :name="gold.name"
+          :price="gold.price"
+          :packages="gold.packages"
+        />
       </div>
     </section>
   </div>

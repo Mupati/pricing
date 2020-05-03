@@ -1,4 +1,8 @@
-export const addSubscriber = (name, email, chosenPackage) => {
-  console.log(email, name, chosenPackage);
-  return 200;
-};
+export const addSubscriber = (name, email, chosenPackage) =>
+  new Promise(function(resolve) {
+    console.log(email, name, chosenPackage);
+    setTimeout(
+      () => resolve({ message: "Subscription Successful", status: 200 }),
+      5000
+    );
+  });

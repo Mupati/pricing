@@ -29,6 +29,7 @@
               <input type="text" disabled v-model="chosenPackage" />
             </label>
             <br />
+            <p>{{ feedback }}</p>
             <button type="submit">Confirm</button>
           </form>
         </section>
@@ -46,7 +47,8 @@ export default {
     return {
       chosenPackage: "",
       yourName: "",
-      yourEmail: ""
+      yourEmail: "",
+      feedback: ""
     };
   },
   methods: {
@@ -66,12 +68,18 @@ export default {
         return "Gold";
       }
     },
-    showAlert() {
-      // Use sweetalert2
-      this.$swal("Hello Vue world!!!");
-    },
-    confirmSubscription() {
-      addSubscriber(this.yourName, this.yourEmail, this.chosenPackage);
+    async confirmSubscription() {
+      var that = this;
+      this.feedback = "Loading....";
+      const res = await addSubscriber(
+        this.yourName,
+        this.yourEmail,
+        this.chosenPackage
+      );
+      this.feedback = res.message;
+      setTimeout(function() {
+        that.$modal.hide(this.chosenPackage);
+      }, 3000);
     }
   }
 };
